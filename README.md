@@ -1,6 +1,5 @@
 # MMEcommerce
-Login, Registration Setup
 
-Login Information: [For Debug Only]
-Mobile: +10987654321
+Login Information: [For Debug Only]</br>
+Mobile: +10987654321</br>
 Code: 098765
