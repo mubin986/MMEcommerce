@@ -1,9 +1,9 @@
-package com.theappbangla.mmecommerce
+package com.theappbangla.mmecommerce.login
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.theappbangla.mmecommerce.data.model.Product
+import com.theappbangla.mmecommerce.R
 import kotlinx.android.synthetic.main.activity_phone.*
 
 class PhoneActivity : AppCompatActivity() {
@@ -18,7 +18,6 @@ class PhoneActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
     }
 
 }

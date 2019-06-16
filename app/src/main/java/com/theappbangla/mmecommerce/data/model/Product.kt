@@ -1,12 +1,8 @@
 package com.theappbangla.mmecommerce.data.model
 
-data class Product (
-    var ref: String,
-    var title: String,
-    var description: String,
-    var price: String,
-    var timestamp: Long,
-    var availableQuantity: Int,
-    var sellerRef: String,
-    var catRef: String
-)
+data class Product(var title: String): BaseProduct() {
+    constructor(title: String, description: String, price: Int):this(title) {
+        this.description = description
+        this.price = price
+    }
+}

@@ -1,4 +1,4 @@
-package com.theappbangla.mmecommerce
+package com.theappbangla.mmecommerce.login
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
+import com.theappbangla.mmecommerce.R
 import com.theappbangla.mmecommerce.auth.FirebasePhoneAuth
 import kotlinx.android.synthetic.main.activity_phone_verification.*
 

@@ -112,6 +112,7 @@
                 app:layout_constraintBottom_toTopOf="@id/ll_footer"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_time_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -151,7 +152,7 @@
                 android:textColor="@android:color/holo_red_light"
                 android:textStyle="bold"
                 android:layout_marginTop="36dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:onClick="onClick"/>
 
             <TextView
