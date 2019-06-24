@@ -1,11 +1,9 @@
-package com.theappbangla.mmecommerce.auth;
+package com.theappbangla.data.auth;
 
 import android.app.Activity;
 import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class FirebaseAnonymousAuth {
 
@@ -13,6 +11,8 @@ public class FirebaseAnonymousAuth {
     Firebase Anonymous Auth Class [in Java]
     Written by Shariful Islam Mubin [Dept. of CSE, KUET]
      */
+
+    public static final String TAG = "FirebaseAnonymousAuth";
 
     private Activity activity;
     private FirebaseAuth mAuth;

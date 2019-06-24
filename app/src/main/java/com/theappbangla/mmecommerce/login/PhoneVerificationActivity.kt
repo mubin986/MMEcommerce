@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseUser
 import com.theappbangla.mmecommerce.R
-import com.theappbangla.mmecommerce.auth.FirebasePhoneAuth
+import com.theappbangla.data.auth.FirebasePhoneAuth
 import kotlinx.android.synthetic.main.activity_phone_verification.*
 
 class PhoneVerificationActivity : AppCompatActivity(), FirebasePhoneAuth.PhoneAuthCallback {
@@ -37,23 +34,23 @@ class PhoneVerificationActivity : AppCompatActivity(), FirebasePhoneAuth.PhoneAu
         showToast("code sent")
     }
 
-    override fun onSuccess(user: FirebaseUser?) {
+    override fun onSuccess(uid: String?) {
         updateUi(true)
         showToast("logged in!")
     }
 
-    override fun onInvalidRequest(e: FirebaseAuthInvalidCredentialsException?) {
+    override fun onInvalidRequest() {
         updateUi(true)
-        Log.d("Invalid Request", e.toString())
+        Log.d("Invalid Request", "")
         showToast("onInvalidRequest")
     }
 
-    override fun onTooManyRequests(e: FirebaseTooManyRequestsException?) {
+    override fun onTooManyRequests() {
         updateUi(true)
         showToast("Too Many Requests")
     }
 
-    override fun onInvalidVerificationCode(e: FirebaseAuthInvalidCredentialsException?) {
+    override fun onInvalidVerificationCode() {
         updateUi(true)
         showToast("Invalid Verification Code")
     }

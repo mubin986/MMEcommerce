@@ -1,10 +1,7 @@
-package com.theappbangla.mmecommerce.auth;
+package com.theappbangla.data.auth;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.*;
@@ -86,11 +83,11 @@ public class FirebasePhoneAuth extends PhoneAuthProvider.OnVerificationStateChan
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult() != null)
-                            callback.onSuccess(task.getResult().getUser());
+                            callback.onSuccess(task.getResult().getUser().getUid());
                         else callback.onUnknownError();
                     } else {
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                            callback.onInvalidVerificationCode((FirebaseAuthInvalidCredentialsException) task.getException());
+                            callback.onInvalidVerificationCode();
                         } else {
                             callback.onUnknownError();
                         }
@@ -110,9 +107,9 @@ public class FirebasePhoneAuth extends PhoneAuthProvider.OnVerificationStateChan
     @Override
     public void onVerificationFailed(FirebaseException e) {
         if (e instanceof FirebaseAuthInvalidCredentialsException) {
-            callback.onInvalidRequest((FirebaseAuthInvalidCredentialsException) e);
+            callback.onInvalidRequest();
         } else if (e instanceof FirebaseTooManyRequestsException) {
-            callback.onTooManyRequests((FirebaseTooManyRequestsException) e);
+            callback.onTooManyRequests();
         } else {
             callback.onUnknownError();
         }
@@ -128,10 +125,10 @@ public class FirebasePhoneAuth extends PhoneAuthProvider.OnVerificationStateChan
     // Callback Interface
     public interface PhoneAuthCallback {
         void onCodeSent(String verificationId);
-        void onSuccess(FirebaseUser user);
-        void onInvalidRequest(FirebaseAuthInvalidCredentialsException e);
-        void onTooManyRequests(FirebaseTooManyRequestsException e);
-        void onInvalidVerificationCode(FirebaseAuthInvalidCredentialsException e);
+        void onSuccess(String uid);
+        void onInvalidRequest();
+        void onTooManyRequests();
+        void onInvalidVerificationCode();
         void onUnknownError();
     }
 

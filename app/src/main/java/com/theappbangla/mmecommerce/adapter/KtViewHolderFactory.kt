@@ -2,14 +2,12 @@ package com.theappbangla.mmecommerce.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.TextView
 import com.theappbangla.mmecommerce.R
-import com.theappbangla.mmecommerce.data.model.Product
-import com.theappbangla.mmecommerce.data.model.Shoe
+import com.theappbangla.data.model.Product
+import com.theappbangla.data.model.Shoe
 import kotlinx.android.synthetic.main.item_rv_product.view.*
 import kotlinx.android.synthetic.main.item_rv_product.view.tv_description
 import kotlinx.android.synthetic.main.item_rv_product.view.tv_title
-import kotlinx.android.synthetic.main.temp.view.*
 import kotlinx.android.synthetic.main.temp.view.tv_price
 
 /**
@@ -38,8 +36,8 @@ object KtViewHolderFactory {
             itemView.tv_description.text = product.description
             itemView.tv_price.text = product.price.toString()
 
-            itemView.tv_category.text = product.catName ?: ""
-            itemView.tv_category.tag = product.catRef ?: ""
+            itemView.tv_category.text = product.categoryName ?: ""
+            itemView.tv_category.tag = product.categoryRef ?: ""
             itemView.tag = product.ref ?: ""
         }
     }
