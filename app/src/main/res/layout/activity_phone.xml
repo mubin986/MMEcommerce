@@ -18,16 +18,20 @@
         android:layout_marginBottom="32dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:src="@color/grey_80" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MM"
+            android:gravity="center"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textStyle="bold|italic"
+            android:textSize="48sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="MM E-Commerce"
+            android:text="E-Commerce"
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -150,7 +154,6 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:textAllCaps="false"
-            android:onClick="onClickSendCode"
             android:layout_gravity="end" />
 
     </FrameLayout>

@@ -1,73 +1,88 @@
 package com.theappbangla.mmecommerce
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import com.theappbangla.data.DataHandler
-import com.theappbangla.data.DataHandlerImpl
+import android.widget.Toast
+import com.theappbangla.data.admin.AdminViewModel
+import com.theappbangla.data.model.BaseProduct
+import com.theappbangla.data.model.Cloth
 import com.theappbangla.mmecommerce.adapter.KtGenericAdapter
 import com.theappbangla.mmecommerce.adapter.KtViewHolderFactory
 import com.theappbangla.data.model.Product
 import com.theappbangla.data.model.Shoe
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity: AppCompatActivity() {
+@Suppress("UNCHECKED_CAST")
+class HomeActivity: AppCompatActivity(), KtGenericAdapter.OnItemClickListener<BaseProduct> {
 
     companion object {
         const val TAG = "HomeActivity"
     }
 
+    private val cartItems = CartDataService.items
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val list= arrayListOf(
-            Product("Dog",  2000),
-            Product("Cat",  3500)
-        )
+        rv_shoe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_shoe.adapter = KtGenericAdapter.create(this)
 
-        val items = arrayListOf<Any>(
-            Product("Dog",  2000),
-            Shoe("Shoe 1", 400),
-            Product("Cat", 3500)
-        )
-
-        val layoutManager = LinearLayoutManager(this)
-        val adapter = object : KtGenericAdapter<Any>(items) {
-            override fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder {
-                return KtViewHolderFactory.create(view, viewType)
-            }
-
-            override fun getLayoutId(position: Int, obj: Any): Int {
-                val layoutID = when(obj) {
-                    is Product -> R.layout.item_rv_product
-                    is Shoe -> R.layout.temp
-                    else -> R.layout.item_rv_product
-                }
-                return layoutID
-            }
-        }
-
-
-        val dataHandler: DataHandler = DataHandlerImpl()
-
-        dataHandler.testUpload("mubin", object: DataHandler.Callback<Void> {
-            override fun onSuccess(result: Void?) {
-                Log.d(TAG, " testUpload : success")
-
-                rv_product.layoutManager = layoutManager
-                rv_product.adapter = adapter
+        rv_cloth.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_cloth.adapter = KtGenericAdapter.create(this)
+        
+        val adminViewModel = AdminViewModel()
+        
+        adminViewModel.getItems(Shoe::class.java, 20, object : AdminViewModel.Callback<List<Shoe>> {
+            override fun onSuccess(result: List<Shoe>) {
+                Log.d(TAG, "count : " + result.count().toString())
+                (rv_shoe.adapter as KtGenericAdapter<BaseProduct>).setData(result)
             }
 
             override fun onError() {
-                Log.d(TAG, " testUpload : error")
+
             }
 
         })
 
+        adminViewModel.getItems(Cloth::class.java, 5, object : AdminViewModel.Callback<List<Cloth>> {
+            override fun onSuccess(result: List<Cloth>) {
+                Log.d(TAG, "count : " + result.count().toString())
+                (rv_cloth.adapter as KtGenericAdapter<BaseProduct>).setData(result)
+            }
+
+            override fun onError() {
+
+            }
+
+        })
+
+
+        tv_view_cart.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onItemClick(data: BaseProduct) {
+        if (cartItems.contains(data)) cartItems.remove(data)
+        else cartItems.add(data)
+
+        if (cartItems.size == 1)
+            ll_bottom.visibility = View.VISIBLE
+        if (cartItems.size == 0)
+            ll_bottom.visibility = View.GONE
+
+        tv_no_of_selected_items.setText(cartItems.size.toString())
+    }
+
+    fun shoeToast(msg: String) {
+        Toast.makeText(this@HomeActivity, msg, Toast.LENGTH_SHORT).show()
     }
 
 }

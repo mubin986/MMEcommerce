@@ -1,7 +1,10 @@
 package com.theappbangla.data.admin
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
 import com.theappbangla.data.BaseRepo
 import com.theappbangla.data.model.BaseProduct
 import com.theappbangla.data.model.Cloth
@@ -15,19 +18,34 @@ class AdminRepository : BaseRepo() {
         return userRef.add(user)
     }
 
-    fun addItem(item: Any) : Task<Void> {
+    fun addItem(item: BaseProduct) : Task<DocumentReference> {
+        return getType(item).add(item)
+    }
+
+    fun addItemByRef(item: BaseProduct) : Task<Void> {
+        return getType(item).document(item.ref).set(item)
+    }
+
+
+    fun getLimitItems(cls: Class<out BaseProduct>, noOfItems: Long) : Task<QuerySnapshot> {
+        return getType(cls.newInstance()).orderBy(ORDER_BY_TIMESTAMP).limit(noOfItems).get()
+    }
+
+    fun getType(item: BaseProduct) : CollectionReference {
         return when(item) {
             is Shoe ->
-                productRef.document(NODE_SHOE).set(item)
+                fs.collection(NODE_SHOE)
 
             is Cloth ->
-                productRef.document(NODE_CLOTH).set(item)
-
-            is BaseProduct ->
-                productRef.document("tmp").set(item)
+                fs.collection(NODE_CLOTH)
 
             else ->
-                productRef.document("other").set(item)
+                fs.collection(NODE_OTHER)
         }
     }
+
+    fun test() : Task<QuerySnapshot> {
+        return fs.collection(NODE_SHOE).orderBy(ORDER_BY_TIMESTAMP).limit(4).get()
+    }
+
 }

@@ -27,6 +27,7 @@ class PhoneVerificationActivity : AppCompatActivity(), FirebasePhoneAuth.PhoneAu
         firebasePhoneAuth = FirebasePhoneAuth(this, "", phone, this)
         firebasePhoneAuth.sendCode()
 
+
     }
 
 

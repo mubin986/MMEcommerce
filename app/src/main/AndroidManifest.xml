@@ -18,6 +18,7 @@
         </activity>
 
         <activity android:name=".login.PhoneVerificationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CartActivity" android:screenOrientation="portrait"/>
         <activity android:name=".HomeActivity" android:screenOrientation="portrait">
         </activity>
     </application>
